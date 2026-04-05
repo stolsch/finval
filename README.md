@@ -1,114 +1,154 @@
+```md
 # FinVal
 
-**Financial data validation library for production applications**
+![Status](https://img.shields.io/badge/status-active_development-orange)
+![License](https://img.shields.io/badge/license-MIT-blue)
+![TypeScript](https://img.shields.io/badge/built_with-TypeScript-blue)
+
+**Production-ready financial data validation for fintech infrastructure**
+
+Financial systems fail silently when bad data enters production.
+
+FinVal is an open-source TypeScript library built to validate financial data before it reaches critical systems such as pricing engines, APIs, risk models, dashboards, and compliance workflows.
+
+Its purpose is simple: make financial data validation reliable, lightweight, and reusable.
 
 ---
 
-## The Problem
+## Why FinVal Exists
 
-Financial applications break silently when bad data gets in. Most teams write ad-hoc validation:
-- "Is this price reasonable?"
-- "Did the API return stale data?"
-- "Is this ISIN code valid?"
-- "Why did the currency conversion fail?"
+Financial teams repeatedly solve the same validation problems:
 
-There's no comprehensive OSS solution. Everyone reinvents the same validators.
+- Is this price realistic?
+- Is this data stale?
+- Is this identifier valid?
+- Did the provider return malformed values?
+- Is this dataset internally consistent?
 
-This library fixes that.
+Most existing solutions are fragmented, highly custom, or buried inside internal systems.
 
-## What It Does
+FinVal aims to provide a clean, extensible validation layer that fintech developers can use from day one.
+
+---
+
+## Core Capabilities
 
 ### 1. Price Validation
-- **Range checks**: Configurable bounds per asset class (stocks, FX, commodities)
-- **Precision validation**: Enforce decimal places (e.g., EUR/USD to 5 decimals)
-- **Sanity checks**: Detect negative prices, zero volumes, impossible values
-- **Spike detection**: Flag sudden price movements beyond thresholds
+
+- Range checks by asset class (equities, FX, commodities, crypto)
+- Precision enforcement by instrument type
+- Negative price and impossible value detection
+- Sudden movement and spike detection
 
 ### 2. Anomaly Detection
-- **Outlier detection**: Statistical methods for spotting bad ticks
-- **Staleness checks**: Flag data older than expected update frequency
-- **Gap detection**: Identify missing data points in time series
-- **Correlation checks**: Cross-validate related instruments (e.g., futures vs spot)
+
+- Statistical outlier detection
+- Staleness detection based on expected update intervals
+- Missing datapoint identification in time series
+- Cross-instrument consistency checks
 
 ### 3. Format Validation
-- **ISIN validation**: Checksum verification for security identifiers
-- **Currency codes**: ISO 4217 compliance
-- **Date formats**: Timezone-aware validation
-- **Market identifiers**: MIC codes, exchange symbols
+
+- ISIN checksum validation
+- ISO 4217 currency code checks
+- Timezone-aware date validation
+- Market identifier validation (MIC, symbols)
 
 ### 4. Data Quality Scoring
-- **Completeness**: Percentage of expected fields present
-- **Timeliness**: Age of data vs expected freshness
-- **Consistency**: Internal consistency checks (bid ≤ ask, etc.)
-- **Confidence scores**: Overall data quality rating
+
+- Completeness scoring
+- Timeliness scoring
+- Internal consistency checks
+- Confidence-based quality assessment
+
+---
+
+## Example Use Cases
+
+- Trading applications validating live market feeds
+- Risk systems protecting model inputs
+- Financial APIs validating payloads before execution
+- ETL pipelines enforcing quality gates
+- Compliance workflows validating reporting data
+
+---
 
 ## Roadmap
 
-**Phase 1 (Months 1-2)**: Price validators
-- Range checks and precision validation
-- Spike detection algorithms
-- Unit tests + documentation
+### Phase 1
 
-**Phase 2 (Months 3-4)**: Anomaly detection
-- Outlier detection methods
-- Staleness and gap detection
-- Real-world test cases
+- Price validators
+- Precision controls
+- Spike detection
+- Unit testing
 
-**Phase 3 (Months 5-6)**: Format validators
-- ISIN, currency, date validation
-- Data quality scoring system
+### Phase 2
+
+- Anomaly detection modules
+- Gap and staleness detection
+- Statistical validation methods
+
+### Phase 3
+
+- Identifier validators
+- Quality scoring engine
 - Integration guides
+
+---
 
 ## Current Status
 
 🚧 **Under active development** 🚧
 
-This library is being extracted from [Hardalion Nexus](https://nexus.hardalion.com) — a fintech platform that processes real market data daily. Validators are being refactored from production code and packaged for community use.
+FinVal is being developed alongside production fintech infrastructure at Hardalion, where financial data reliability is a core requirement.
 
-**First release:** Expected Q2 2026
+Initial modules are released progressively after production hardening, abstraction, and documentation.
 
-## Why This Matters
-
-Bad financial data causes:
-- **Silent failures**: Wrong portfolio values, incorrect risk calculations
-- **Production incidents**: Apps crash on unexpected formats
-- **Compliance issues**: Regulatory reports with invalid data
-- **Lost trust**: Users see impossible prices or stale quotes
-
-This library provides:
-- **Battle-tested validators** from production fintech systems
-- **Sensible defaults** for common asset classes
-- **Extensible patterns** for custom validation rules
-
-The goal: make financial data validation boring (in a good way).
-
-## Contributing
-
-Contributions welcome! This project is in early stages. Once initial validators are released:
-- Report edge cases and validation failures
-- Suggest additional asset classes
-- Share your own production validation patterns
-- Improve documentation with real-world examples
-
-## Tech Stack
-
-- **Language**: TypeScript (type safety for financial calculations)
-- **Testing**: Vitest with property-based testing
-- **Documentation**: TypeDoc + usage examples
-- **License**: MIT (to be confirmed)
-
-## Use Cases
-
-- **Trading apps**: Validate market data before display
-- **Risk systems**: Ensure calculation inputs are sane
-- **Compliance**: Pre-validate data before regulatory submission
-- **Data pipelines**: Quality gates for financial ETL
-- **APIs**: Input validation for fintech endpoints
-
-## Author
-
-Built by [Apostolos](https://github.com/stolsch), founder of [Hardalion](https://hardalion.com) — fintech infrastructure for modern financial applications.
+**First public release target: Q2 2026**
 
 ---
 
-**Note**: This is production-grade validation extracted from real fintech systems. Components are released as they're validated, documented, and generalized. Quality over speed.
+## Why It Matters
+
+Bad financial data leads to:
+
+- Incorrect valuations
+- Faulty risk calculations
+- Broken dashboards
+- Compliance failures
+- Silent production errors
+
+Reliable validation should not be rebuilt inside every fintech stack.
+
+The goal is simple:
+
+**Financial data validation should be a solved problem.**
+
+---
+
+## Tech Stack
+
+- **Language:** TypeScript
+- **Testing:** Vitest
+- **Documentation:** TypeDoc
+- **License:** MIT
+
+---
+
+## Contributing
+
+Contributions are welcome as the library evolves.
+
+Areas where feedback is especially valuable:
+
+- Edge cases from production environments
+- New validation rules by asset class
+- Real-world anomaly scenarios
+- Documentation improvements
+
+---
+
+## Maintainer
+
+Built by Apostolos Chardalias  
+```
