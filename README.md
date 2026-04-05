@@ -1,4 +1,3 @@
-```md
 # FinVal
 
 ![Status](https://img.shields.io/badge/status-active_development-orange)
@@ -150,5 +149,4 @@ Areas where feedback is especially valuable:
 
 ## Maintainer
 
-Built by Apostolos Chardalias  
-```
+Built by Apostolos Chardalias
