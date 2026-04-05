@@ -63,7 +63,7 @@ This library fixes that.
 
 🚧 **Under active development** 🚧
 
-This library is being extracted from [Hardalion Nexus](https://hardalion.com) — a fintech platform that processes real market data daily. Validators are being refactored from production code and packaged for community use.
+This library is being extracted from [Hardalion Nexus](https://nexus.hardalion.com) — a fintech platform that processes real market data daily. Validators are being refactored from production code and packaged for community use.
 
 **First release:** Expected Q2 2026
 
