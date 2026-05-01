@@ -1,152 +1,74 @@
 # FinVal
 
-![Status](https://img.shields.io/badge/status-active_development-orange)
-![License](https://img.shields.io/badge/license-MIT-blue)
-![TypeScript](https://img.shields.io/badge/built_with-TypeScript-blue)
+[![npm version](https://img.shields.io/npm/v/finval.svg)](https://www.npmjs.com/package/finval)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
+[![Coverage](https://img.shields.io/badge/coverage-target%20100%25-brightgreen.svg)](#roadmap)
 
-**Production-ready financial data validation for fintech infrastructure**
+Financial data validation should be a solved problem.
 
-Financial systems fail silently when bad data enters production.
-
-FinVal is an open-source TypeScript library built to validate financial data before it reaches critical systems such as pricing engines, APIs, risk models, dashboards, and compliance workflows.
-
-Its purpose is simple: make financial data validation reliable, lightweight, and reusable.
-
----
+FinVal is a production-ready, open-source TypeScript library for validating financial data before it reaches pricing engines, APIs, risk models, dashboards, and compliance workflows.
 
 ## Why FinVal Exists
 
-Financial teams repeatedly solve the same validation problems:
+Financial systems break in expensive ways when market data is malformed, stale, out-of-range, or internally inconsistent. FinVal gives teams a lightweight, composable validation layer they can run early in ingestion pipelines and service boundaries, with deterministic machine-readable error codes.
 
-- Is this price realistic?
-- Is this data stale?
-- Is this identifier valid?
-- Did the provider return malformed values?
-- Is this dataset internally consistent?
+## Installation
 
-Most existing solutions are fragmented, highly custom, or buried inside internal systems.
+```bash
+npm install finval
+```
 
-FinVal aims to provide a clean, extensible validation layer that fintech developers can use from day one.
+## Quick Start
 
----
+```ts
+import { validatePriceRange } from "finval";
 
-## Core Capabilities
+const result = validatePriceRange({ price: 150, assetClass: "equity" });
+console.log(result.valid); // true
+```
 
-### 1. Price Validation
+```ts
+import { validateNoNegativeValues } from "finval";
 
-- Range checks by asset class (equities, FX, commodities, crypto)
-- Precision enforcement by instrument type
-- Negative price and impossible value detection
-- Sudden movement and spike detection
+const result = validateNoNegativeValues({
+  assetClass: "equity",
+  price: 101.5,
+  bid: 101.4,
+  ask: 101.6,
+  volume: 12000
+});
+console.log(result.errors);
+```
 
-### 2. Anomaly Detection
+```ts
+import { detectSpike } from "finval";
 
-- Statistical outlier detection
-- Staleness detection based on expected update intervals
-- Missing datapoint identification in time series
-- Cross-instrument consistency checks
+const result = detectSpike({ prices: [100, 101, 99, 145, 100], threshold: 0.2 });
+console.log(result.errors.map((error) => error.code)); // ['PRICE_SPIKE']
+```
 
-### 3. Format Validation
+## API Reference
 
-- ISIN checksum validation
-- ISO 4217 currency code checks
-- Timezone-aware date validation
-- Market identifier validation (MIC, symbols)
+Generate docs locally with:
 
-### 4. Data Quality Scoring
+```bash
+pnpm docs
+```
 
-- Completeness scoring
-- Timeliness scoring
-- Internal consistency checks
-- Confidence-based quality assessment
-
----
-
-## Example Use Cases
-
-- Trading applications validating live market feeds
-- Risk systems protecting model inputs
-- Financial APIs validating payloads before execution
-- ETL pipelines enforcing quality gates
-- Compliance workflows validating reporting data
-
----
+TypeDoc output is generated under `docs/`.
 
 ## Roadmap
 
-### Phase 1
-
-- Price validators
-- Precision controls
-- Spike detection
-- Unit testing
-
-### Phase 2
-
-- Anomaly detection modules
-- Gap and staleness detection
-- Statistical validation methods
-
-### Phase 3
-
-- Identifier validators
-- Quality scoring engine
-- Integration guides
-
----
-
-## Current Status
-
-🚧 **Under active development** 🚧
-
-FinVal is being developed alongside production fintech infrastructure at Hardalion, where financial data reliability is a core requirement.
-
-Initial modules are released progressively after production hardening, abstraction, and documentation.
-
-**First public release target: Q2 2026**
-
----
-
-## Why It Matters
-
-Bad financial data leads to:
-
-- Incorrect valuations
-- Faulty risk calculations
-- Broken dashboards
-- Compliance failures
-- Silent production errors
-
-Reliable validation should not be rebuilt inside every fintech stack.
-
-The goal is simple:
-
-**Financial data validation should be a solved problem.**
-
----
-
-## Tech Stack
-
-- **Language:** TypeScript
-- **Testing:** Vitest
-- **Documentation:** TypeDoc
-- **License:** MIT
-
----
+- [x] Phase 1: Price validators (range, precision, negatives, spikes) with tests
+- [x] Phase 1: Public API barrel and strict core types
+- [ ] Phase 2: Expanded anomaly detection coverage and tests
+- [ ] Phase 3: Full format validators (complete ISO 4217 list, MIC datasets, date edge cases)
+- [ ] Quality engine enhancements and scoring heuristics
 
 ## Contributing
 
-Contributions are welcome as the library evolves.
+Contributions are welcome. Please read [CONTRIBUTING.md](./CONTRIBUTING.md) before opening a PR.
 
-Areas where feedback is especially valuable:
+## License
 
-- Edge cases from production environments
-- New validation rules by asset class
-- Real-world anomaly scenarios
-- Documentation improvements
-
----
-
-## Maintainer
-
-Built by Apostolos Chardalias
+MIT © Apostolos Chardalias (Hardalion)
